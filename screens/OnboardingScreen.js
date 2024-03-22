@@ -1,14 +1,23 @@
-import { Text, Image, StyleSheet, View } from 'react-native';
+import { Text, Image, StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import React from 'react';
 import Onboarding from 'react-native-onboarding-swiper';
 import Home from '../screens/HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 
 
+const {width, height} = Dimensions.get('window');
+
 export default function OnboardingScreen(){
 const navigation = useNavigation();
 const handleDone = () => {
   navigation.navigate('Home');
+}
+const doneButton = ({...props}) => {
+  return(
+    <TouchableOpacity style = {styles.doneButton} {...props}>
+      <Text>Done</Text>
+  </TouchableOpacity>
+  )
 }
 
   return(
@@ -17,7 +26,9 @@ const handleDone = () => {
       <Onboarding
         
     onDone={handleDone}
-    onSkip={handleDone}        
+    onSkip={handleDone} 
+    bottomBarHighlight = {false}
+    DoneButtonComponent = {doneButton}       
     containerStyles={{paddingHorizontal: 15}}
       pages={[
         {
@@ -66,9 +77,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    top: -230,
-    height: 270,
-    width: 350,
+    top: -270,
+    height: width,
+    width: width * .9,
   },
   onImage:{
     height: 250,
@@ -76,4 +87,10 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40
   },
+  doneButton:{
+    backgroundColor: 'white',
+    padding: 15,
+    borderTopLeftRadius: 100,
+    borderBottomLeftRadius: 100,
+  }
 })
